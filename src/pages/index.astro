@@ -4,10 +4,27 @@ import { portfolio } from "../data/generatedPortfolio";
 import { withBase, areaRoute } from "../lib/urls";
 
 const [heroProject, ...heroRest] = portfolio.featuredProjects;
-const heroImages = portfolio.featuredProjects
+const projectHeroTiles = portfolio.featuredProjects
   .filter((project) => project.heroImage)
   .slice(0, 5)
-  .map((project) => ({ project, image: project.heroImage! }));
+  .map((project) => ({
+    href: areaRoute(project.area.toLowerCase().replaceAll(" ", "-")),
+    title: project.title,
+    image: project.heroImage!,
+    portrait: false,
+  }));
+const heroTiles = [
+  {
+    href: withBase("/profile/"),
+    title: "Cristian Angel Choque Nacho",
+    image: {
+      src: "/media/profile/cristian-portrait.png",
+      alt: "Portrait of Cristian Angel Choque Nacho",
+    },
+    portrait: true,
+  },
+  ...projectHeroTiles,
+];
 ---
 
 <BaseLayout title={`${portfolio.profile.name} | Geospatial Portfolio`}>
@@ -32,10 +49,10 @@ const heroImages = portfolio.featuredProjects
       </div>
     </div>
     <div class="hero-mosaic" aria-label="Featured project visuals">
-      {heroImages.map(({ project, image }, index) => (
-        <a class={`hero-tile hero-tile--${index + 1}`} href={areaRoute(project.area.toLowerCase().replaceAll(" ", "-"))}>
+      {heroTiles.map(({ href, title, image, portrait }, index) => (
+        <a class={`hero-tile hero-tile--${index + 1}${portrait ? " hero-tile--portrait" : ""}`} href={href}>
           <img src={withBase(image.src)} alt={image.alt} />
-          <span>{project.title}</span>
+          <span>{title}</span>
         </a>
       ))}
     </div>

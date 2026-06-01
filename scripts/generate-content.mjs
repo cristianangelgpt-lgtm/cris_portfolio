@@ -574,7 +574,7 @@ function buildPortfolio() {
     headline:
       "Geospatial Data Specialist focused on GIS analysis, satellite remote sensing, UAV photogrammetry, GIS analytics and spatial data automation.",
     summary:
-      "Experience in GIS analysis, satellite remote sensing and UAV photogrammetry, including GIS analytics, QA/QC, cartography, spatial analysis, orthomosaics, DSM/DTM products, point clouds, remote sensing workflows and Python/ArcPy automation.",
+      "Welcome to my digital portfolio. Here you can explore selected projects from my professional work and academic research, with experience in GIS analysis, satellite remote sensing and UAV photogrammetry, including GIS analytics, QA/QC, cartography, spatial analysis, orthomosaics, DSM/DTM products, point clouds, remote sensing workflows and Python/ArcPy automation.",
     contact: [
       { label: "Email", value: "cristiangeocn@gmail.com", href: "mailto:cristiangeocn@gmail.com" },
       { label: "Phone", value: "+86 159 1118 2644", href: "tel:+8615911182644" },

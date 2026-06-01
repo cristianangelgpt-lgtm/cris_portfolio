@@ -13,7 +13,7 @@ export const portfolio = {
     "cvUrl": "/CV-CRIS.pdf",
     "whatsappQr": "/media/profile/whatsapp-qr.jpg",
     "headline": "Geospatial Data Specialist focused on GIS analysis, satellite remote sensing, UAV photogrammetry, GIS analytics and spatial data automation.",
-    "summary": "Experience in GIS analysis, satellite remote sensing and UAV photogrammetry, including GIS analytics, QA/QC, cartography, spatial analysis, orthomosaics, DSM/DTM products, point clouds, remote sensing workflows and Python/ArcPy automation.",
+    "summary": "Welcome to my digital portfolio. Here you can explore selected projects from my professional work and academic research, with experience in GIS analysis, satellite remote sensing and UAV photogrammetry, including GIS analytics, QA/QC, cartography, spatial analysis, orthomosaics, DSM/DTM products, point clouds, remote sensing workflows and Python/ArcPy automation.",
     "contact": [
       {
         "label": "Email",

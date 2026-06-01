@@ -430,8 +430,13 @@ p {
 }
 
 .hero-tile--4,
-.hero-tile--5 {
-  grid-column: span 3;
+.hero-tile--5,
+.hero-tile--6 {
+  grid-column: span 2;
+}
+
+.hero-tile--portrait img {
+  object-position: 50% 38%;
 }
 
 .section-block {
@@ -1458,7 +1463,8 @@ html[data-theme="dark"] .profile-domain-card--compact {
   .hero-tile--2,
   .hero-tile--3,
   .hero-tile--4,
-  .hero-tile--5 {
+  .hero-tile--5,
+  .hero-tile--6 {
     grid-column: span 1;
     grid-row: span 1;
   }
