@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Geospatial portfolio icon">
+  <rect width="64" height="64" rx="16" fill="#07111f"/>
+  <path d="M13 42 28 15l9 17 5-8 10 18H13Z" fill="#7dd3fc"/>
+  <path d="M14 47h36" stroke="#f6d365" stroke-width="4" stroke-linecap="round"/>
+</svg>

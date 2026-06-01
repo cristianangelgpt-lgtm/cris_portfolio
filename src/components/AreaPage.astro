@@ -1,0 +1,66 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+import { withBase } from "../lib/urls";
+import type { PortfolioArea } from "../data/generatedPortfolio";
+
+interface Props {
+  area: PortfolioArea;
+}
+
+const { area } = Astro.props;
+---
+
+<section class="area-hero">
+  <div class="area-hero__copy">
+    <span class="eyebrow">Selected Work</span>
+    <h1>{area.title}</h1>
+    <p>{area.description}</p>
+  </div>
+  {area.heroImage && (
+    <figure class="area-hero__visual">
+      <img src={withBase(area.heroImage.src)} alt={`${area.title} visual`} />
+      <figcaption>{area.heroImage.caption}</figcaption>
+    </figure>
+  )}
+</section>
+
+<section class="group-overview" aria-label={`${area.title} project groups`}>
+  <div class="group-overview__heading">
+    <span class="eyebrow">Applied Project Categories</span>
+    <h2>Work grouped by applied project categories.</h2>
+  </div>
+  {area.groups.map((group) => (
+    <a class="group-card" href={`#${group.id}`} data-reveal>
+      {group.heroImage && <img src={withBase(group.heroImage.src)} alt={`${group.title} visual`} loading="lazy" />}
+      <div>
+        <span>{group.projects.length} {group.projects.length === 1 ? "project" : "projects"}</span>
+        <h2>{group.title}</h2>
+        <p>{group.description}</p>
+      </div>
+    </a>
+  ))}
+</section>
+
+<section class="area-groups">
+  {area.groups.map((group) => (
+    <section class="group-section" id={group.id}>
+      <div class="group-section__header">
+        <div>
+          <span class="eyebrow">{area.title}</span>
+          <h2>{group.title}</h2>
+        </div>
+        <div>
+          <p>{group.description}</p>
+          {group.supportingProjects.length > 0 && (
+            <p class="supporting-note">
+              Integrated supporting work: {group.supportingProjects.map((project) => project.title).join(", ")}.
+            </p>
+          )}
+        </div>
+      </div>
+      <div class="project-list">
+        {group.projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </section>
+  ))}
+</section>

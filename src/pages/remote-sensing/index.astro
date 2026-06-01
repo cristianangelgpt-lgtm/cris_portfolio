@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import AreaPage from "../../components/AreaPage.astro";
+import { portfolio } from "../../data/generatedPortfolio";
+
+const area = portfolio.areas.find((item) => item.id === "remote-sensing")!;
+---
+
+<BaseLayout title="Remote Sensing | Cristian Choque" description={area.description}>
+  <AreaPage area={area} />
+</BaseLayout>

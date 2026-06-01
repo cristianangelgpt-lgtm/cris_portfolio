@@ -1,0 +1,83 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { portfolio } from "../data/generatedPortfolio";
+import { withBase, areaRoute } from "../lib/urls";
+
+const [heroProject, ...heroRest] = portfolio.featuredProjects;
+const heroImages = portfolio.featuredProjects
+  .filter((project) => project.heroImage)
+  .slice(0, 5)
+  .map((project) => ({ project, image: project.heroImage! }));
+---
+
+<BaseLayout title={`${portfolio.profile.name} | Geospatial Portfolio`}>
+  <section class="home-hero">
+    <div class="home-hero__copy">
+      <span class="eyebrow">GIS & Remote Sensing Specialist</span>
+      <h1>Cristian Angel Choque Nacho</h1>
+      <div class="hero-credentials" aria-label="Academic credentials">
+        <p>
+          <strong>B.Sc. in Geographic Engineering</strong>
+          <span>Military School of Engineering, Bolivia | 2019</span>
+        </p>
+        <p>
+          <strong>M.Sc. in GIS & Remote Sensing</strong>
+          <span>Beihang University, Beijing, China | 2024</span>
+        </p>
+      </div>
+      <p>{portfolio.profile.summary}</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#selected-work">View Featured Work</a>
+        <a class="button button-secondary" href={withBase("/profile/")}>Profile / CV</a>
+      </div>
+    </div>
+    <div class="hero-mosaic" aria-label="Featured project visuals">
+      {heroImages.map(({ project, image }, index) => (
+        <a class={`hero-tile hero-tile--${index + 1}`} href={areaRoute(project.area.toLowerCase().replaceAll(" ", "-"))}>
+          <img src={withBase(image.src)} alt={image.alt} />
+          <span>{project.title}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-block" id="selected-work">
+    <div class="section-heading">
+      <span class="eyebrow">Main Areas</span>
+      <h2>Featured geospatial work by area domain.</h2>
+    </div>
+    <div class="area-card-grid">
+      {portfolio.areas.map((area) => (
+        <a class="area-card" href={areaRoute(area.id)} data-reveal>
+          {area.heroImage && <img src={withBase(area.heroImage.src)} alt={`${area.title} visual`} />}
+          <div>
+            <span>{area.groups.length} project groups</span>
+            <h3>{area.title}</h3>
+            <p>{area.description}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <span class="eyebrow">Featured Projects</span>
+      <h2>High-impact geospatial outputs.</h2>
+    </div>
+    <div class="featured-strip">
+      {[heroProject, ...heroRest].filter(Boolean).slice(0, 6).map((project) => (
+        <article class="featured-card" data-reveal>
+          {project.heroImage && <img src={withBase(project.heroImage.src)} alt={project.heroImage.alt} />}
+          <div>
+            <span>{project.area}</span>
+            <h3>{project.title}</h3>
+            <ul class="keyword-list compact">
+              {project.keywords.slice(0, 4).map((keyword) => <li>{keyword}</li>)}
+            </ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

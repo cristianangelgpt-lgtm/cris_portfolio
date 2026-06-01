@@ -1,0 +1,66 @@
+---
+import "photoswipe/style.css";
+import "../styles/global.css";
+import { portfolio } from "../data/generatedPortfolio";
+import { withBase } from "../lib/urls";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${portfolio.profile.name} | Geospatial Portfolio`,
+  description = portfolio.profile.headline,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <script is:inline>
+      const storedTheme = localStorage.getItem("theme");
+      document.documentElement.dataset.theme = storedTheme || "light";
+    </script>
+    <link rel="icon" href={withBase("/favicon.svg")} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href={withBase("/")}>
+          <span>{portfolio.profile.name}</span>
+          <strong>{portfolio.profile.role}</strong>
+        </a>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href={withBase("/gis-analysis/")}>GIS Analysis</a>
+          <a href={withBase("/remote-sensing/")}>Remote Sensing</a>
+          <a href={withBase("/uav-mapping/")}>UAV Mapping</a>
+          <a href={withBase("/profile/")}>Profile</a>
+        </nav>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme">
+          <span data-theme-label>Dark</span>
+        </button>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <footer class="footer">
+        <span>{portfolio.profile.name}</span>
+        <span>{portfolio.profile.role}</span>
+      </footer>
+    </div>
+    <script>
+      import "../scripts/site";
+    </script>
+  </body>
+</html>

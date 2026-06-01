@@ -1,0 +1,21 @@
+{
+  "name": "portfolio-site-v2",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run generate-content && astro dev",
+    "build": "npm run generate-content && astro build",
+    "preview": "astro preview",
+    "generate-content": "node scripts/generate-content.mjs",
+    "validate-content": "node scripts/generate-content.mjs --validate"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.6.0",
+    "astro": "^6.4.2",
+    "photoswipe": "^5.4.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,100 @@
+---
+import { withBase } from "../lib/urls";
+import type { PortfolioProject } from "../data/generatedPortfolio";
+
+interface Props {
+  project: PortfolioProject;
+}
+
+const { project } = Astro.props;
+const hero = project.heroImage;
+const gallery = project.gallery;
+const cardImages = gallery.length > 0 ? gallery : hero ? [hero] : [];
+const contextParts = [project.client, project.location, project.period]
+  .filter(Boolean)
+  .filter((item) => !/^On review/i.test(item));
+---
+
+<article class="project-card" data-reveal>
+  {cardImages.length > 0 && (
+    <div class="project-card__media pswp-gallery" data-project-carousel>
+      <div class="project-card__slides">
+        {cardImages.map((image, index) => (
+          <a
+            class:list={["project-card__image", "project-card__image-slide", { "is-active": index === 0 }]}
+            href={withBase(image.src)}
+            data-pswp-width={image.width}
+            data-pswp-height={image.height}
+            data-caption={image.caption}
+            data-carousel-slide
+            aria-hidden={index === 0 ? "false" : "true"}
+            tabindex={index === 0 ? "0" : "-1"}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={withBase(image.src)} alt={image.alt} loading={index === 0 ? "lazy" : "lazy"} />
+          </a>
+        ))}
+      </div>
+
+      {cardImages.length > 1 && (
+        <>
+          <div class="project-card__carousel-controls" aria-label={`Browse images for ${project.title}`}>
+            <button type="button" class="project-card__carousel-button" data-carousel-prev aria-label="Previous image">
+              ‹
+            </button>
+            <button type="button" class="project-card__carousel-button" data-carousel-next aria-label="Next image">
+              ›
+            </button>
+          </div>
+          <span class="project-card__media-count" data-carousel-status>1 / {cardImages.length}</span>
+        </>
+      )}
+    </div>
+  )}
+  {cardImages.length === 0 && <div class="project-card__media project-card__media--empty" aria-hidden="true"></div>}
+
+  <div class="project-card__content">
+    <div class="project-card__meta">
+      <span>{project.group}</span>
+    </div>
+    <h3>{project.title}</h3>
+    <p class="project-summary">{project.summary}</p>
+
+    <ul class="keyword-list" aria-label={`Keywords for ${project.title}`}>
+      {project.keywords.slice(0, 6).map((keyword) => <li>{keyword}</li>)}
+    </ul>
+
+    <details class="read-more">
+      <summary>Read More</summary>
+      <div class="read-more__content">
+        {project.details.role && (
+          <section class="detail-section">
+            <h4>Project contribution</h4>
+            <p>{project.details.role}</p>
+          </section>
+        )}
+
+        {contextParts.length > 0 && (
+          <p class="project-context">{contextParts.join(" | ")}</p>
+        )}
+
+        {project.deliverables.length > 0 && (
+          <section class="detail-section">
+            <h4>Main deliverables</h4>
+            <ul>
+              {project.deliverables.map((item) => <li>{item}</li>)}
+            </ul>
+          </section>
+        )}
+
+        {project.details.campaigns && (
+          <section class="detail-section">
+            <h4>Campaigns</h4>
+            <p>{project.details.campaigns}</p>
+          </section>
+        )}
+      </div>
+    </details>
+  </div>
+</article>

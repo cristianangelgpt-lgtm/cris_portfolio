@@ -1,0 +1,196 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { portfolio } from "../../data/generatedPortfolio";
+import { withBase } from "../../lib/urls";
+
+const profile = portfolio.profile;
+const sectionLinks = [
+  { label: "Contact", href: "#contact" },
+  { label: "Technical Domains", href: "#technical-domains" },
+  { label: "Experience", href: "#experience" },
+  { label: "Education", href: "#education" },
+  { label: "Technical Skills", href: "#technical-skills" },
+  { label: "Languages & Training", href: "#languages-training" },
+];
+const contactIcons: Record<string, string> = {
+  Email: "M4 6h16v12H4V6Zm0 1 8 6 8-6",
+  Phone: "M7 4h4l1 5-2 1c1 2 3 4 5 5l1-2 5 1v4c0 1-1 2-2 2C11 20 4 13 4 5c0-1 1-1 2-1Z",
+  WhatsApp: "M4 11a7 7 0 1 1 3 5.7L4 18l1.3-3A7 7 0 0 1 4 11Zm5-3c1 4 3 6 7 7l1-2-3-1-1 1c-1-1-2-2-3-3l1-1-1-3-2 1Z",
+  WeChat: "M8 7c-3 0-5 2-5 4 0 1.4.8 2.7 2 3.4L4 17l3-1c.4.1.8.1 1.2.1 3 0 5-2 5-4.1C13.2 9 11 7 8 7Zm7 3c3 0 5 1.8 5 4 0 1.2-.7 2.4-1.8 3l.8 2.1-2.5-.9c-.5.1-1 .2-1.5.2-2.8 0-5-1.8-5-4s2.2-4 5-4Z",
+  Location: "M12 21s7-5 7-11a7 7 0 0 0-14 0c0 6 7 11 7 11Zm0-8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z",
+  Nationality: "M5 5h14v14H5V5Zm3 4h4m-4 4h8m-8 3h6m2-7h1",
+};
+---
+
+<BaseLayout title="Profile / CV | Cristian Choque" description={profile.headline}>
+  <section class="profile-hero">
+    <div>
+      <span class="eyebrow">Professional Profile</span>
+      <h1>{profile.name}</h1>
+      <div class="hero-credentials" aria-label="Academic credentials">
+        <p>
+          <strong>B.Sc. in Geographic Engineering</strong>
+          <span>Military School of Engineering, Bolivia | 2019</span>
+        </p>
+        <p>
+          <strong>M.Sc. in GIS & Remote Sensing</strong>
+          <span>Beihang University, Beijing, China | 2024</span>
+        </p>
+      </div>
+      <p>{profile.headline}</p>
+      <div class="hero-actions profile-hero-actions">
+        <a class="button button-primary" href={withBase(profile.cvUrl)} target="_blank" rel="noreferrer">Open CV PDF</a>
+        <aside class="profile-status-card profile-status-card--hero">
+          <span>Current Status</span>
+          <strong>Ph.D. Student</strong>
+          <p>Current research in geospatial hazard monitoring - Civil Engineering major.</p>
+        </aside>
+      </div>
+      <nav class="profile-section-nav" aria-label="Go to profile section">
+        <span>Go to section</span>
+        {sectionLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+      </nav>
+    </div>
+  </section>
+
+  <section class="profile-overview">
+    <article class="profile-panel profile-panel--lead" id="technical-domains" data-reveal>
+      <span class="eyebrow">Profile & Technical Domains</span>
+      <h2>Technical focus across GIS Analysis, Satellite Remote Sensing and UAV Photogrammetry.</h2>
+      <div class="profile-domain-grid profile-domain-grid--embedded">
+        {profile.focusAreas.map((area) => (
+          <article class="profile-domain-card profile-domain-card--compact">
+            <h3>{area.title}</h3>
+            <p>{area.text}</p>
+            <ul class="keyword-list compact">
+              {area.tools.slice(0, 4).map((tool) => <li>{tool}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </article>
+
+    <aside class="profile-panel profile-contact-panel" id="contact" data-reveal>
+      <span class="eyebrow">Contact</span>
+      <h2>Direct contact</h2>
+      <div class="contact-list">
+        {profile.contact.map((item) => (
+          item.href ? (
+            <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noreferrer" : undefined}>
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d={contactIcons[item.label]} /></svg>
+              <span>
+                <span>{item.label}</span>
+                <strong>{item.value}</strong>
+              </span>
+            </a>
+          ) : (
+            <div>
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d={contactIcons[item.label]} /></svg>
+              <span>
+                <span>{item.label}</span>
+                <strong>{item.value}</strong>
+              </span>
+            </div>
+          )
+        ))}
+      </div>
+      <div class="profile-qr-gallery pswp-gallery">
+        <a
+          class="profile-qr-card"
+          href={withBase(profile.whatsappQr)}
+          data-pswp-width="446"
+          data-pswp-height="438"
+          data-caption="WhatsApp QR code for Cristian Angel Choque Nacho."
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img src={withBase(profile.whatsappQr)} alt="WhatsApp QR code for Cristian Angel Choque Nacho" loading="lazy" />
+          <span>
+            <strong>WhatsApp QR</strong>
+            <small>Click to enlarge or scan directly.</small>
+          </span>
+        </a>
+      </div>
+    </aside>
+  </section>
+
+  <section class="profile-section profile-section--split">
+    <article class="profile-panel profile-timeline" id="experience" data-reveal>
+      <span class="eyebrow">Experience</span>
+      <h2>Professional experience</h2>
+      <div class="timeline-list">
+        {profile.experience.map((item) => (
+          <section class="timeline-item">
+            <span>{item.period}</span>
+            <h3>{item.role}</h3>
+            <p>{item.organization}</p>
+            <ul>
+              {item.points.map((point) => <li>{point}</li>)}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </article>
+
+    <article class="profile-panel profile-timeline" id="education" data-reveal>
+      <span class="eyebrow">Education</span>
+      <h2>Academic background</h2>
+      <div class="timeline-list">
+        {profile.education.map((item) => (
+          <section class="timeline-item">
+            <span>{item.period}</span>
+            <h3>{item.degree}</h3>
+            <p>{item.institution}</p>
+            {item.note && <p class="timeline-note">{item.note}</p>}
+          </section>
+        ))}
+      </div>
+    </article>
+  </section>
+
+  <section class="profile-section" id="technical-skills">
+    <div class="section-heading">
+      <span class="eyebrow">Technical Skills</span>
+      <h2>Tools, platforms and production workflows.</h2>
+    </div>
+    <div class="profile-skill-grid">
+      {profile.skillGroups.map((group) => (
+        <article class="profile-panel profile-skill-card" data-reveal>
+          <span>{group.level}</span>
+          <h3>{group.title}</h3>
+          <ul class="keyword-list compact">
+            {group.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="profile-section profile-section--split profile-section--compact" id="languages-training">
+    <article class="profile-panel" data-reveal>
+      <span class="eyebrow">Languages</span>
+      <h2>Communication</h2>
+      <div class="language-grid">
+        {profile.languages.map((item) => (
+          <div>
+            <strong>{item.language}</strong>
+            <span>{item.level}</span>
+          </div>
+        ))}
+      </div>
+    </article>
+
+    <article class="profile-panel" data-reveal>
+      <span class="eyebrow">Training</span>
+      <h2>Certifications & conferences</h2>
+      <div class="training-list">
+        {profile.training.map((item) => (
+          <p><strong>{item.year}</strong> {item.title} <span>{item.provider}</span></p>
+        ))}
+      </div>
+      <ul class="conference-list">
+        {profile.conferences.map((item) => <li>{item}</li>)}
+      </ul>
+    </article>
+  </section>
+</BaseLayout>
